@@ -4,7 +4,7 @@ return [
 
     'title' => 'Login',
 
-    'heading' => 'Sign in to your account',
+    'heading' => 'Sign In',
 
     'buttons' => [
 
@@ -15,6 +15,10 @@ return [
     ],
 
     'fields' => [
+
+        'phone_number' => [
+            'label' => 'Phone Number',
+        ],
 
         'email' => [
             'label' => 'Email address',

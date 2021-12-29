@@ -10,6 +10,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BooleanColumn;
 use Livewire\Component;
 
 class UserResource extends Resource
@@ -25,11 +26,15 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\Card::make()->schema([
                     Forms\Components\TextInput::make("name")->required(),
-                    Forms\Components\TextInput::make("email")->email()->required(),
+                    Forms\Components\TextInput::make("phone_number")
+                        ->tel()
+                        ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask->pattern('{0}00-000-0000'))
+                        ->required(),
                     Forms\Components\TextInput::make("password")->required()->password()->required()
                         ->hidden(fn(Component $livewire): bool => $livewire instanceof Pages\EditUser),
                     Forms\Components\BelongsToManyMultiSelect::make("roles")
                         ->relationship("roles","name"),
+                    Forms\Components\Toggle::make('active'),
                 ])->columns(['sm'=>2])->columnSpan(2),
                 Forms\Components\Card::make()->schema([
                     Forms\Components\Placeholder::make('created_at')
@@ -46,7 +51,10 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make("name")->searchable()->sortable(),
-                Tables\Columns\TextColumn::make("email")->searchable()->sortable(),
+                Tables\Columns\TextColumn::make("phone_number")->searchable()->sortable(),
+                BooleanColumn::make('active')
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
             ])
             ->filters([
                 //

@@ -53,7 +53,7 @@ return [
     'auth' => [
         'guard' => env('FILAMENT_AUTH_GUARD', 'web'),
         'pages' => [
-            'login' => \Filament\Http\Livewire\Auth\Login::class,
+            'login' => \App\Http\Livewire\Login::class,
         ],
     ],
 
@@ -106,7 +106,7 @@ return [
         'path' => app_path('Filament/Widgets'),
         'register' => [
             Widgets\AccountWidget::class,
-            Widgets\FilamentInfoWidget::class,
+            //Widgets\FilamentInfoWidget::class,
         ],
     ],
 
