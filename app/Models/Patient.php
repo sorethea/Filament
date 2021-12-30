@@ -20,6 +20,8 @@ class Patient extends Model
         'city',
         'note',
         'active',
+        'created_by',
+        'updated_by',
     ];
 
     protected $casts = [
@@ -31,5 +33,11 @@ class Patient extends Model
     ];
     public function getNameAttribute(){
         return $this->first_name.' '.$this->last_name;
+    }
+    public function createdBy(){
+        return $this->belongsTo(User::class,'created_by');
+    }
+    public function updatedBy(){
+        return $this->belongsTo(User::class,'updated_by');
     }
 }

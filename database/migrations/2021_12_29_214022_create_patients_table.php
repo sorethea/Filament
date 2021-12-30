@@ -25,6 +25,8 @@ class CreatePatientsTable extends Migration
             $table->string('city')->nullable();
             $table->text('note')->nullable();
             $table->boolean('active')->default(true);
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

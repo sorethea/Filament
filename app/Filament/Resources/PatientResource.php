@@ -38,8 +38,12 @@ class PatientResource extends Resource
                     Forms\Components\MarkdownEditor::make('note')->columnSpan(2),
                 ])->columns(['sm'=>2])->columnSpan(2),
                 Forms\Components\Card::make()->schema([
+                    Forms\Components\Placeholder::make('createdBy')
+                        ->content(fn(?Patient $record): string => $record ? $record->createdBy->name : '-'),
                     Forms\Components\Placeholder::make('created_at')
                         ->content(fn (?Patient $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                    Forms\Components\Placeholder::make('updatedBy')
+                        ->content(fn(?Patient $record): string => $record ? $record->updatedBy->name : '-'),
                     Forms\Components\Placeholder::make('updated_at')
                         ->content(fn (?Patient $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                 ])->columnSpan(1),
@@ -67,9 +71,11 @@ class PatientResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
+
+
 
     public static function getPages(): array
     {
@@ -77,6 +83,7 @@ class PatientResource extends Resource
             'index' => Pages\ListPatients::route('/'),
             'create' => Pages\CreatePatient::route('/create'),
             'edit' => Pages\EditPatient::route('/{record}/edit'),
+            'view' => Pages\ViewPatient::route('/{record}'),
         ];
     }
 }
