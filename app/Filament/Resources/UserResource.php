@@ -29,6 +29,7 @@ class UserResource extends Resource
                     Forms\Components\TextInput::make("phone_number")
                         ->tel()
                         ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask->pattern('{0}00-000-0000'))
+                        ->unique('users','phone_number',fn(?User $record):?User=>$record)
                         ->required(),
                     Forms\Components\TextInput::make("password")->required()->password()->required()
                         ->hidden(fn(Component $livewire): bool => $livewire instanceof Pages\EditUser),

@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PatientResource\Pages;
-use App\Filament\Resources\PatientResource\RelationManagers;
-use App\Models\Patient;
+use App\Filament\Resources\DoctorResource\Pages;
+use App\Filament\Resources\DoctorResource\RelationManagers;
+use App\Models\Doctor;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -12,11 +13,12 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Livewire\Component;
 
-class PatientResource extends Resource
+class DoctorResource extends Resource
 {
-    protected static ?string $model = Patient::class;
+    protected static ?string $model = Doctor::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+
     protected static ?string $navigationGroup = 'Clinic';
 
     public static function form(Form $form): Form
@@ -29,26 +31,31 @@ class PatientResource extends Resource
                     Forms\Components\TextInput::make('phone_number')
                         ->tel()
                         ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask->pattern('{0}00-000-0000'))
+                        ->unique('users','phone_number',fn (?Doctor $record):?User => $record->user??null)
                         ->required(),
                     Forms\Components\TextInput::make("password")->required()->password()->required()
-                        ->visible(fn(Component $livewire): bool => $livewire instanceof Pages\CreatePatient),
+                        ->visible(fn(Component $livewire): bool => $livewire instanceof Pages\CreateDoctor),
                     Forms\Components\Select::make('gender')->options(['male'=>'Male','female'=>'Female'])->required(),
                     Forms\Components\DatePicker::make('birth_date'),
                     Forms\Components\TextInput::make('address1'),
                     Forms\Components\TextInput::make('address2'),
                     Forms\Components\TextInput::make('city'),
+                    Forms\Components\select::make('department'),
+                    Forms\Components\TextInput::make('position'),
+                    Forms\Components\TextInput::make('specialist'),
+                    Forms\Components\TextInput::make('qualification'),
                     Forms\Components\Toggle::make('active'),
                     Forms\Components\MarkdownEditor::make('note')->columnSpan(2),
                 ])->columns(['sm'=>2])->columnSpan(2),
                 Forms\Components\Card::make()->schema([
                     Forms\Components\Placeholder::make('createdBy')
-                        ->content(fn(?Patient $record): string => $record ? $record->createdBy->name : '-'),
+                        ->content(fn(?Doctor $record): string => $record ? $record->createdBy->name : '-'),
                     Forms\Components\Placeholder::make('created_at')
-                        ->content(fn (?Patient $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                        ->content(fn (?Doctor $record): string => $record ? $record->created_at->diffForHumans() : '-'),
                     Forms\Components\Placeholder::make('updatedBy')
-                        ->content(fn(?Patient $record): string => $record ? $record->updatedBy->name : '-'),
+                        ->content(fn(?Doctor $record): string => $record ? $record->updatedBy->name : '-'),
                     Forms\Components\Placeholder::make('updated_at')
-                        ->content(fn (?Patient $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                        ->content(fn (?Doctor $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                 ])->columnSpan(1),
 
             ])->columns(3);
@@ -74,19 +81,17 @@ class PatientResource extends Resource
     public static function getRelations(): array
     {
         return [
-
+            //
         ];
     }
-
-
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPatients::route('/'),
-            'create' => Pages\CreatePatient::route('/create'),
-            'edit' => Pages\EditPatient::route('/{record}/edit'),
-            'view' => Pages\ViewPatient::route('/{record}'),
+            'index' => Pages\ListDoctors::route('/'),
+            'create' => Pages\CreateDoctor::route('/create'),
+            'edit' => Pages\EditDoctor::route('/{record}/edit'),
+            'view' => Pages\ViewDoctor::route('/{record}'),
         ];
     }
 }

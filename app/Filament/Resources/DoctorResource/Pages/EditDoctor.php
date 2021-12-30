@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\PatientResource\Pages;
+namespace App\Filament\Resources\DoctorResource\Pages;
 
-use App\Filament\Resources\PatientResource;
+use App\Filament\Resources\DoctorResource;
+use App\Models\Doctor;
+use App\Models\User;
 use Filament\Resources\Pages\EditRecord;
 
-class EditPatient extends EditRecord
+class EditDoctor extends EditRecord
 {
-    protected static string $resource = PatientResource::class;
+    protected static string $resource = DoctorResource::class;
     public $record;
     protected function mutateFormDataBeforeSave(array $data): array
     {
@@ -15,5 +17,4 @@ class EditPatient extends EditRecord
         $this->record->user->update(['phone_number' => $data['phone_number'], 'name' => $data['first_name'] . ' ' . $data['last_name']]);
         return $data;
     }
-
 }

@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.1",
+        "doctrine/dbal": "^3.2",
         "filament/filament": "^2.7",
         "filament/spatie-laravel-media-library-plugin": "^2.7",
         "filament/spatie-laravel-settings-plugin": "^2.7",
