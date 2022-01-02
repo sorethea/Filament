@@ -11,8 +11,14 @@ class ListPatients extends ListRecords
 {
     protected static string $resource = PatientResource::class;
 
-    protected function getTableRecordUrlUsing():Closure
+    protected function getHeaderWidgets(): array
     {
-        return fn(Patient $record): string => route('filament.resources.patients.view',['record'=>$record]);
+        return [
+            //PatientResource\Widgets\PatientOverview::class,
+        ];
     }
+
+//    protected function getTableRecordUrlUsing():Closure
+//    {       return fn(Patient $record): string => route('filament.resources.patients.view',['record'=>$record]);
+//    }
 }

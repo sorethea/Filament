@@ -10,9 +10,8 @@ class Patient extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
+        'name',
         'user_id',
-        'first_name',
-        'last_name',
         'birth_date',
         'gender',
         'address1',
@@ -29,14 +28,10 @@ class Patient extends Model
     'active'=>'boolean',
 ];
     protected $appends=[
-        'name',
-        'phone_number'
+        'phone_number',
     ];
     public function getPhoneNumberAttribute(){
         return $this->user->phone_number;
-    }
-    public function getNameAttribute(){
-        return $this->user->name;
     }
     public function createdBy(){
         return $this->belongsTo(User::class,'created_by');
@@ -47,5 +42,9 @@ class Patient extends Model
 
     public function user(){
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function cases(){
+        return $this->hasMany(PatientCase::class,'patient_id','id');
     }
 }

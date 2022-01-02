@@ -15,8 +15,6 @@ class CreateDoctorTable extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
             $table->integer('user_id')->nullable();
             $table->integer('department_id')->nullable();
             $table->enum('gender',['male','female']);
@@ -24,6 +22,7 @@ class CreateDoctorTable extends Migration
             $table->string('position')->nullable();
             $table->string('specialist')->nullable();
             $table->string('qualification')->nullable();
+            $table->string('name');
             $table->string('address1')->nullable();
             $table->string('address2')->nullable();
             $table->string('city')->nullable();

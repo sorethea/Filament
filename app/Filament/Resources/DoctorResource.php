@@ -26,8 +26,7 @@ class DoctorResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Card::make()->schema([
-                    Forms\Components\TextInput::make('first_name')->required(),
-                    Forms\Components\TextInput::make('last_name')->required(),
+                    Forms\Components\TextInput::make('name')->required(),
                     Forms\Components\TextInput::make('phone_number')
                         ->tel()
                         ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask->pattern('{0}00-000-0000'))
@@ -65,7 +64,7 @@ class DoctorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->sortable(['first_name','last_name'])->searchable(['first_name','last_name']),
+                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('phone_number')->searchable(),
                 Tables\Columns\BadgeColumn::make('gender')
                     ->colors(['primary'=>'male','secondary'=>'female'])

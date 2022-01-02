@@ -13,7 +13,7 @@ class CreatePatient extends CreateRecord
     {
         $data['created_by'] = auth()->id();
         $data['updated_by'] = auth()->id();
-        $user = User::create(['phone_number' => $data['phone_number'], 'name' => $data['first_name'] . ' ' . $data['last_name'], 'password' => \Hash::make($data['password']),]);
+        $user = User::create(['phone_number' => $data['phone_number'], 'name' => $data['name'], 'password' => \Hash::make($data['password']),]);
         $user->assignRole('Patient');
         $data['user_id'] = $user->id;
         return $data;

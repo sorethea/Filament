@@ -14,7 +14,7 @@ class EditDoctor extends EditRecord
     protected function mutateFormDataBeforeSave(array $data): array
     {
         $data['updated_by'] = auth()->id();
-        $this->record->user->update(['phone_number' => $data['phone_number'], 'name' => $data['first_name'] . ' ' . $data['last_name']]);
+        $this->record->user->update(['phone_number' => $data['phone_number'], 'name' => $data['name'] ]);
         return $data;
     }
 }
