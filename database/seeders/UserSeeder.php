@@ -29,6 +29,20 @@ class UserSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+        \DB::table('roles')->insert([
+            'id'=>'2',
+            'name'=>'Client',
+            'guard_name' => 'web',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        \DB::table('roles')->insert([
+            'id'=>'3',
+            'name'=>'Provider',
+            'guard_name' => 'web',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
         \DB::table('model_has_roles')->insert([
             'role_id' => 1,
             'model_type' => 'App\Models\User',

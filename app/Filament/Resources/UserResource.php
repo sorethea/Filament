@@ -32,9 +32,11 @@ class UserResource extends Resource
                         ->required(),
                     Forms\Components\TextInput::make("password")->required()->password()->required()
                         ->hidden(fn(Component $livewire): bool => $livewire instanceof Pages\EditUser),
+                    Forms\Components\DatePicker::make('birth_date'),
                     Forms\Components\BelongsToManyMultiSelect::make("roles")
                         ->relationship("roles","name"),
                     Forms\Components\Toggle::make('active'),
+                    Forms\Components\Textarea::make('address')->columnSpan(2),
                 ])->columns(['sm'=>2])->columnSpan(2),
                 Forms\Components\Card::make()->schema([
                     Forms\Components\Placeholder::make('created_at')
@@ -52,6 +54,8 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make("name")->searchable()->sortable(),
                 Tables\Columns\TextColumn::make("phone_number")->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('birth_date')->searchable(),
+                Tables\Columns\TextColumn::make('address')->searchable(),
                 BooleanColumn::make('active')
                     ->trueIcon('heroicon-o-check-circle')
                     ->falseIcon('heroicon-o-x-circle')

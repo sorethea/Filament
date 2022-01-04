@@ -24,6 +24,7 @@ class User extends Authenticatable
         'phone_number',
         'password',
         'active',
+        'properties',
     ];
 
     /**
@@ -45,7 +46,22 @@ class User extends Authenticatable
         'active' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'address'    => 'string',
+        'birth_date' => 'date',
+        'properties' => 'array',
     ];
 
+    protected $appends =[
+        'address',
+        'birth_date',
+    ];
+
+    public function getAddressAttribute():string{
+        return $this->properties['address']??'';
+    }
+
+    public function getBirthDateAttribute():string{
+        return $this->properties['birth_date']??'';
+    }
 
 }
