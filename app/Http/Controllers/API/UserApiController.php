@@ -9,8 +9,26 @@ use Illuminate\Support\Str;
 
 class UserApiController extends Controller
 {
-    public function getUser(Request $request){
-        return $this->sendResponse($request->user());
+    public function updateProfile(Request $request){
+        try{
+            $input = $request->all();
+            $address = $input['address'];
+            $birth_date = $input['birth_date'];
+            $input['properties'] = [
+                'birth_date' => $birth_date,
+                'address'    => $address,
+            ];
+            $user = $request->user();
+            if($user){
+                $user->update($input);
+            }
+            return $this->sendResponse($user,'Success update!');
+        }catch (\Exception $exception){
+            return $this->sendError($exception->getMessage());
+        }
+    }
+    public function getProfile(Request $request){
+        return $this->sendResponse($request->user(),'Success retrieved profile');
     }
     public function firebaseLogin(Request $request){
         try{
@@ -36,7 +54,7 @@ class UserApiController extends Controller
                     auth()->login($user);
                 }
             }
-            return $this->sendResponse($user,'Login Success');
+            return $this->sendResponse($user,'Login Success!');
         }catch (\Exception $exception){
             return $this->sendError($exception->getMessage());
         }

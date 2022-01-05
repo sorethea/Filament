@@ -19,3 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', 'UserApiController@getUser');
 Route::post('firebase_login','UserApiController@firebaseLogin');
 
 
+
+
+Route::resource('profiles', App\Http\Controllers\API\ProfileAPIController::class);
